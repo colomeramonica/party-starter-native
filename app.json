@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.colomeramonica.partystarter"
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +32,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "9180a3bf-2dfa-4634-885b-470971fc0024"
+      }
+    },
+    "owner": "colomeramonica"
   }
 }
