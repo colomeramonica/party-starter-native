@@ -8,6 +8,7 @@ import NavBar from './components/NavBar';
 import { config } from "@gluestack-ui/config"
 import { GluestackUIProvider } from '@gluestack-ui/themed';
 const Stack = createNativeStackNavigator();
+import './i18n';
 
 export default function Home() {
   return (

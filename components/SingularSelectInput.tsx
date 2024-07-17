@@ -1,4 +1,5 @@
 import { ChevronDownIcon, Icon } from '@gluestack-ui/themed';
+import { ChevronDown } from 'lucide-react-native';
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
@@ -21,7 +22,7 @@ const SingularSelectInput = ({ options }) => {
         <Text style={styles.optionText}>
           {selectedItem.length ? selectedItem : 'Select an option'}
         </Text>
-        <Icon as={ChevronDownIcon} />
+        <ChevronDown />
       </TouchableOpacity>
       {showOptions && (
         <View>

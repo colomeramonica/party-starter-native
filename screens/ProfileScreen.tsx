@@ -1,30 +1,48 @@
-import { Button, ButtonGroup, ButtonIcon, ButtonSpinner, ButtonText, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal } from '@gluestack-ui/themed';
+import { Button, ButtonGroup, ButtonText, Heading, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectInput, SelectItem, SelectPortal } from '@gluestack-ui/themed';
 import { Image } from '@gluestack-ui/themed';
-import { AlertCircleIcon, Box, Card, ChevronDownIcon, FormControl, FormControlError, FormControlErrorIcon, FormControlErrorText, FormControlHelper, FormControlHelperText, FormControlLabel, FormControlLabelText, Icon, Input, InputField, InputIcon, InputSlot, Select, SelectIcon, SelectTrigger, Textarea, TextareaInput } from '@gluestack-ui/themed';
-import React from 'react';
-import { View, Text } from 'react-native';
+import { Box, Card, ChevronDownIcon, FormControl, FormControlLabel, FormControlLabelText, Icon, Input, InputField, Select, SelectIcon, SelectTrigger, Textarea, TextareaInput } from '@gluestack-ui/themed';
+import React, { useState } from 'react';
+import classes from '../data/DnDClasses';
+import races from '../data/DnDRaces';
+import MultiSelectInput from '../components/MultiSelectInput';
+import SingularSelectInput from '../components/SingularSelectInput';
+import { useTranslation } from 'react-i18next';
+import Avatar from '../components/Avatar';
+import PhotoGallery from '../components/PhotoGallery';
 
 export default function ProfileScreen() {
+  const { t } = useTranslation();
+  const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
+
+  const handleSelectItem = (className) => {
+    if (selectedClasses.includes(className)) {
+      setSelectedClasses(selectedClasses.filter(item => item !== className));
+    } else {
+      setSelectedClasses([...selectedClasses, className]);
+    }
+  };
+
   return (
     <>
       <Card p="$4" m="$4" rounded="$md" bg="$bgDark800" flexDirection="column" alignItems="center">
-        <Box w="100%" alignItems='center' mb="$2">
-          <Image
-            size="md"
-            borderRadius="$full"
-            source={{
-              uri: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-            }}
-          />
+        <Box width="100%" alignItems='center' marginBottom="$2">
+          <Avatar />
         </Box>
-        <Box w="100%" mb="$2">
-          <FormControl size="md" isDisabled={false} isInvalid={false} isReadOnly={false} isRequired={false} >
+        <Box width="100%" marginBottom="$2">
+          <Heading
+            mb="$1"
+            fontSize={20}
+            color="$textDark800"
+            fontWeight="500">
+            {t('sections.sheet')}
+          </Heading>
+          <FormControl isDisabled={false} isInvalid={false} isReadOnly={false} isRequired={false} >
             <FormControlLabel>
-              <FormControlLabelText>Name</FormControlLabelText>
+              <FormControlLabelText>{t('character.name')}</FormControlLabelText>
             </FormControlLabel>
             <Input>
               <InputField
-                placeholder="Character name"
+                placeholder={t('character.name')}
               />
             </Input>
           </FormControl>
@@ -32,11 +50,11 @@ export default function ProfileScreen() {
         <Box w="100%" mb="$2">
           <FormControl size="md" isDisabled={false} isInvalid={false} isReadOnly={false} isRequired={false} >
             <FormControlLabel>
-              <FormControlLabelText>Summary</FormControlLabelText>
+              <FormControlLabelText>{t('character.summary')}</FormControlLabelText>
             </FormControlLabel>
             <Textarea>
               <TextareaInput
-                placeholder="Character summary"
+                placeholder={t('character.summary')}
               />
             </Textarea>
           </FormControl>
@@ -44,64 +62,50 @@ export default function ProfileScreen() {
         <Box w="100%" mb="$2">
           <FormControl size="md" isDisabled={false} isInvalid={false} isReadOnly={false} isRequired={false} >
             <FormControlLabel>
-              <FormControlLabelText>Class</FormControlLabelText>
+              <FormControlLabelText>{t('character.class')}</FormControlLabelText>
             </FormControlLabel>
-            <Select>
-              <SelectTrigger variant="outline" size="md">
-                <SelectInput placeholder="Select option" />
-                <SelectIcon mr="$3">
-                  <Icon as={ChevronDownIcon} />
-                </SelectIcon>
-              </SelectTrigger>
-              <SelectPortal>
-                <SelectBackdrop />
-                <SelectContent>
-                  <SelectDragIndicatorWrapper>
-                    <SelectDragIndicator />
-                  </SelectDragIndicatorWrapper>
-                  <SelectItem label="UX Research" value="ux" />
-                </SelectContent>
-              </SelectPortal>
-            </Select>
+            <MultiSelectInput options={Object.entries(classes)} />
           </FormControl>
         </Box>
         <Box w="100%" mb="$2">
           <FormControl size="md" isDisabled={false} isInvalid={false} isReadOnly={false} isRequired={false} >
             <FormControlLabel>
-              <FormControlLabelText>Race</FormControlLabelText>
+              <FormControlLabelText>{t('character.race')}</FormControlLabelText>
             </FormControlLabel>
-            <Select>
-              <SelectTrigger variant="outline" size="md">
-                <SelectInput placeholder="Select option" />
-                <SelectIcon mr="$3">
-                  <Icon as={ChevronDownIcon} />
-                </SelectIcon>
-              </SelectTrigger>
-              <SelectPortal>
-                <SelectBackdrop />
-                <SelectContent>
-                  <SelectDragIndicatorWrapper>
-                    <SelectDragIndicator />
-                  </SelectDragIndicatorWrapper>
-                  <SelectItem label="UX Research" value="ux" />
-                </SelectContent>
-              </SelectPortal>
-            </Select>
+            <SingularSelectInput options={Object.entries(races)} />
           </FormControl>
         </Box>
-      </Card >
-      <Box w="100%" mb="$2">
-        <ButtonGroup flexDirection="row" justifyContent="space-between" alignContent='flex-end'>
-          <Button size="md"
-            variant="solid"
-            action="primary"
-            isDisabled={false}
-            isFocusVisible={false}>
-            <ButtonText>Salvar</ButtonText>
-            {/* <ButtonSpinner /> */}
-          </Button>
-        </ButtonGroup>
-      </Box>
+        <Box w="100%" mb="$2">
+          <Heading
+            mb="$1"
+            fontSize={20}
+            color="$textDark800"
+            fontWeight="500">
+            {t('sections.photo_gallery')}
+          </Heading>
+          <PhotoGallery />
+        </Box>
+        <Box width="100%" mt="$2">
+          <ButtonGroup alignContent="space-around" alignSelf="flex-end">
+            <Button size="md"
+              variant="outline"
+              action="primary"
+              isDisabled={false}
+              isFocusVisible={false}>
+              <ButtonText>{t('actions.save')}</ButtonText>
+              {/* <ButtonSpinner /> */}
+            </Button>
+            <Button size="md"
+              variant="outline"
+              action="negative"
+              isDisabled={false}
+              isFocusVisible={false}>
+              <ButtonText>{t('actions.cancel')}</ButtonText>
+              {/* <ButtonSpinner /> */}
+            </Button>
+          </ButtonGroup>
+        </Box>
+      </Card>
     </>
   );
 }
