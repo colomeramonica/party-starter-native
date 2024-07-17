@@ -1,11 +1,11 @@
 import React from 'react';
-import AntDesign from '@expo/vector-icons/AntDesign';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
+import { Check, X } from 'lucide-react-native';
 
 export default function ActionButton({ type }: { type: string }) {
-  const [buttonIcon, setButtonIcon] = useState(<AntDesign name="check" size={20} color="white" />);
+  const [buttonIcon, setButtonIcon] = useState(<Check size={20} color="white" />);
   const [colorPallete, setColorPallete] = useState<string[]>([]);
 
   useEffect(() => {
@@ -15,11 +15,11 @@ export default function ActionButton({ type }: { type: string }) {
   const setButtonStyle = () => {
     if (type === 'decline') {
       setColorPallete(['#9f4c4c', '#983b3b', '#6a1919']);
-      return setButtonIcon(<AntDesign name="close" size={20} color="white" />)
+      return setButtonIcon(<X size={20} color="white" />)
     }
 
     setColorPallete(['#4c669f', '#3b5998', '#192f6a']);
-    return setButtonIcon(<AntDesign name="check" size={20} color="white" />)
+    return setButtonIcon(<Check size={20} color="white" />)
   }
 
   return (
